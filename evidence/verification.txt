@@ -1,0 +1,84 @@
+
+> bountyproof@1.0.0 verify
+> npm run typecheck && npm test && npm run test:python && npm run build
+
+
+> bountyproof@1.0.0 typecheck
+> tsc --noEmit
+
+
+> bountyproof@1.0.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ replay refuses foreign targets and unregistered paths (0.909833ms)
+✔ management authentication fails closed (0.119291ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 251.892
+
+> bountyproof@1.0.0 test:python
+> python3 -m unittest discover -s tests -v
+
+test_exploit_and_remediation (test_idor.AuthorizationTests.test_exploit_and_remediation) ... ok
+test_legitimate_access (test_idor.AuthorizationTests.test_legitimate_access) ... ok
+test_unauthenticated_and_missing (test_idor.AuthorizationTests.test_unauthenticated_and_missing) ... ok
+test_missing_control_or_scanner_error_fails (test_sast.SastGateTests.test_missing_control_or_scanner_error_fails) ... ok
+test_unreviewed_finding_fails (test_sast.SastGateTests.test_unreviewed_finding_fails) ... ok
+test_jwt_signature_expiry_audience_issuer (test_scenarios.FixedBoundaryTests.test_jwt_signature_expiry_audience_issuer) ... ok
+test_oauth_binding_expiration_and_reuse (test_scenarios.FixedBoundaryTests.test_oauth_binding_expiration_and_reuse) ... ok
+test_path_canonicalization (test_scenarios.FixedBoundaryTests.test_path_canonicalization) ... ok
+test_state_and_session_capacity (test_scenarios.FixedBoundaryTests.test_state_and_session_capacity) ... ok
+test_bad_login_and_jwt_inputs (test_scenarios.HttpLifecycleTests.test_bad_login_and_jwt_inputs) ... ok
+test_cages_deny_nonfixture_inputs (test_scenarios.HttpLifecycleTests.test_cages_deny_nonfixture_inputs) ... ok
+test_dns_rebinding_and_cross_origin_denied (test_scenarios.HttpLifecycleTests.test_dns_rebinding_and_cross_origin_denied) ... ok
+test_ten_full_lifecycles (test_scenarios.HttpLifecycleTests.test_ten_full_lifecycles) ... ok
+test_unauthenticated_scenario_access (test_scenarios.HttpLifecycleTests.test_unauthenticated_scenario_access) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 3.271s
+
+OK
+
+> bountyproof@1.0.0 build
+> tsc
+
+
+> bountyproof@1.0.0 evidence
+> python3 -m tools.verify && python3 -m tools.reports
+
+Verified 10 exploit reproductions, 10 remediations and 10 legitimate operations over HTTP.
+Exported ten professional research reports.
+
+> bountyproof@1.0.0 test:browser
+> playwright test
+
+
+Running 3 tests using 1 worker
+
+(node:62453) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/workbench.spec.ts:21:1 › management API rejects unauthorized, cross-origin and write requests (54ms)
+  ✓  2 tests/browser/workbench.spec.ts:28:1 › XSS executes only in vulnerable origin (303ms)
+  ✓  3 tests/browser/workbench.spec.ts:36:1 › dashboard inspects every finding, filters, exports reports and responds to mobile layout (1.2s)
+
+  3 passed (3.3s)
+
+> bountyproof@1.0.0 test:browser
+> playwright test
+
+
+Running 4 tests using 1 worker
+
+(node:63069) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/workbench.spec.ts:22:1 › management API rejects unauthorized, cross-origin and write requests (66ms)
+  ✓  2 tests/browser/workbench.spec.ts:29:1 › XSS executes only in vulnerable origin (525ms)
+  ✓  3 tests/browser/workbench.spec.ts:37:1 › dashboard inspects every finding, filters, exports reports and responds to mobile layout (1.2s)
+  ✓  4 tests/browser/workbench.spec.ts:72:1 › TypeScript replay proves authorization and SQL remediation over real HTTP (14ms)
+
+  4 passed (3.8s)

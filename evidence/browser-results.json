@@ -1,0 +1,246 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.3.0/bin/node",
+      "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/playwright.config.ts",
+    "rootDir": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 20000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/tests/browser",
+        "snapshotDir": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/bountyproof/tests/browser",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 20000,
+        "use": {
+          "browserName": "chromium",
+          "headless": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "evidence/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "workbench.spec.ts",
+      "file": "workbench.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "management API rejects unauthorized, cross-origin and write requests",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 66,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T20:59:39.802Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-0f007cd895105e581be6",
+          "file": "workbench.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "XSS executes only in vulnerable origin",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 525,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T20:59:40.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-e96521d04177b780fdbd",
+          "file": "workbench.spec.ts",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "title": "dashboard inspects every finding, filters, exports reports and responds to mobile layout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1172,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T20:59:41.144Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-b4feca4951ca0a6e782a",
+          "file": "workbench.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "TypeScript replay proves authorization and SQL remediation over real HTTP",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 20000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-31T20:59:42.326Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-11e7b3e058a7464a1d90",
+          "file": "workbench.spec.ts",
+          "line": 72,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-31T20:59:39.351Z",
+    "duration": 3766.819,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

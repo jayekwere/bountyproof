@@ -1,0 +1,787 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-31T20:58:39.639313+00:00",
+  "sourceSha256": "72cb8f0290dcb4bf3debdbdf45bac0d4e3b3a447207220386912f6e5433ebf8b",
+  "scope": "Owned local fictional fixtures only",
+  "findings": [
+    {
+      "id": "BP-001",
+      "slug": "idor",
+      "title": "Invoice ownership bypass",
+      "cwe": "CWE-639",
+      "owasp": "API1:2023",
+      "severity": "High",
+      "path": "/api/invoices",
+      "attack": {
+        "id": "2"
+      },
+      "legitimate": {
+        "id": "1"
+      },
+      "rootCause": "Missing per-object ownership authorization after authentication.",
+      "impact": "Read another fictional user invoice.",
+      "source": "invoice",
+      "limitation": "Fixture tokens stand in for a real identity provider.",
+      "reference": "https://portswigger.net/web-security/access-control",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /api/invoices?id=2 HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "30",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"owner\": \"bob\", \"total\": 450}"
+      },
+      "after": {
+        "request": "GET /api/invoices?id=2 HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 403,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "22",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"error\": \"Forbidden\"}"
+      },
+      "positive": {
+        "request": "GET /api/invoices?id=1 HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "32",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"owner\": \"alice\", \"total\": 120}"
+      },
+      "additional": [
+        {
+          "request": "GET /api/invoices?id=2 HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-bob",
+          "status": 200,
+          "headers": {
+            "Server": "BaseHTTP/0.6 Python/3.14.6",
+            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Content-Type": "application/json",
+            "Content-Length": "30",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+          },
+          "body": "{\"owner\": \"bob\", \"total\": 450}"
+        }
+      ],
+      "vulnerableCode": "def invoice(identifier, session, mode):\n    actor = SESSIONS.get(session)\n    if not actor:\n        return 401, {'error': 'Authentication required'}\n    record = INVOICES.get(identifier)\n    if not record:\n        return 404, {'error': 'Not found'}\n    if mode == 'fixed' and record['owner'] != actor:\n        return 403, {'error': 'Forbidden'}\n    return 200, record\n",
+      "fixedCode": "def invoice(identifier, session, mode):\n    actor = SESSIONS.get(session)\n    if not actor:\n        return 401, {'error': 'Authentication required'}\n    record = INVOICES.get(identifier)\n    if not record:\n        return 404, {'error': 'Not found'}\n    if mode == 'fixed' and record['owner'] != actor:\n        return 403, {'error': 'Forbidden'}\n    return 200, record\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-002",
+      "slug": "sql",
+      "title": "SQL predicate injection",
+      "cwe": "CWE-89",
+      "owasp": "A03:2021",
+      "severity": "High",
+      "path": "/sql",
+      "attack": {
+        "q": "' OR 1=1 --"
+      },
+      "legitimate": {
+        "q": "Alice"
+      },
+      "rootCause": "String concatenation lets input change the SQL predicate.",
+      "impact": "Read Bob private note from an in-memory database.",
+      "source": "sql",
+      "limitation": "SQLite in-memory SELECT only; no persistence or stacked statement execution.",
+      "reference": "https://portswigger.net/web-security/sql-injection",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /sql?q=%27+OR+1%3D1+-- HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "48",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"rows\": [[\"Alice note\"], [\"Bob private note\"]]}"
+      },
+      "after": {
+        "request": "GET /sql?q=%27+OR+1%3D1+-- HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "12",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"rows\": []}"
+      },
+      "positive": {
+        "request": "GET /sql?q=Alice HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "26",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"rows\": [[\"Alice note\"]]}"
+      },
+      "additional": [],
+      "vulnerableCode": "def sql_vulnerable(q):\n    with closing(sqlite3.connect(':memory:')) as db:\n        db.executescript(\"CREATE TABLE notes(owner TEXT, body TEXT); INSERT INTO notes VALUES ('alice','Alice note'),('bob','Bob private note');\")\n        return db.execute(\"SELECT body FROM notes WHERE owner='alice' AND body LIKE '%\" + q + \"%'\").fetchall()\n",
+      "fixedCode": "def sql_fixed(q):\n    with closing(sqlite3.connect(':memory:')) as db:\n        db.executescript(\"CREATE TABLE notes(owner TEXT, body TEXT); INSERT INTO notes VALUES ('alice','Alice note'),('bob','Bob private note');\")\n        return db.execute(\"SELECT body FROM notes WHERE owner=? AND body LIKE ?\", ('alice', '%' + q + '%')).fetchall()\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-003",
+      "slug": "xss",
+      "title": "Reflected HTML script execution",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021",
+      "severity": "High",
+      "path": "/xss",
+      "attack": {
+        "q": "<script>window.__bp=1</script>"
+      },
+      "legitimate": {
+        "q": "hello"
+      },
+      "rootCause": "Unescaped input is inserted into an HTML body context.",
+      "impact": "Execute a marker script in the local fixture origin.",
+      "source": "xss",
+      "limitation": "HTML body context only; no cookie theft or external callbacks.",
+      "reference": "https://portswigger.net/web-security/cross-site-scripting",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /xss?q=%3Cscript%3Ewindow.__bp%3D1%3C%2Fscript%3E HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Length": "80",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "<!doctype html><title>Search result</title><p><script>window.__bp=1</script></p>"
+      },
+      "after": {
+        "request": "GET /xss?q=%3Cscript%3Ewindow.__bp%3D1%3C%2Fscript%3E HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Length": "92",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "<!doctype html><title>Search result</title><p>&lt;script&gt;window.__bp=1&lt;/script&gt;</p>"
+      },
+      "positive": {
+        "request": "GET /xss?q=hello HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Length": "55",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "<!doctype html><title>Search result</title><p>hello</p>"
+      },
+      "additional": [],
+      "vulnerableCode": "def xss_vulnerable(q):\n    return '<!doctype html><title>Search result</title><p>' + q + '</p>'\n",
+      "fixedCode": "def xss_fixed(q):\n    return '<!doctype html><title>Search result</title><p>' + html.escape(q, quote=True) + '</p>'\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-004",
+      "slug": "ssrf",
+      "title": "Internal service request exposure",
+      "cwe": "CWE-918",
+      "owasp": "API7:2023",
+      "severity": "High",
+      "path": "/ssrf",
+      "attack": {
+        "url": "http://127.0.0.1:8093/private"
+      },
+      "legitimate": {
+        "url": "http://127.0.0.1:8093/public"
+      },
+      "rootCause": "User-selected destination is fetched without application authorization.",
+      "impact": "Read a fictional internal marker through the application.",
+      "source": "ssrf",
+      "limitation": "Transport is caged to two exact loopback URLs; DNS rebinding and external egress are excluded.",
+      "reference": "https://portswigger.net/web-security/ssrf",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /ssrf?url=http%3A%2F%2F127.0.0.1%3A8093%2Fprivate HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "40",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"content\": \"FICTIONAL_INTERNAL_MARKER\"}"
+      },
+      "after": {
+        "request": "GET /ssrf?url=http%3A%2F%2F127.0.0.1%3A8093%2Fprivate HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 403,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "40",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"error\": \"Destination is not approved\"}"
+      },
+      "positive": {
+        "request": "GET /ssrf?url=http%3A%2F%2F127.0.0.1%3A8093%2Fpublic HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "30",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"content\": \"Public stock: 7\"}"
+      },
+      "additional": [],
+      "vulnerableCode": "def ssrf_vulnerable(url):\n    return fixture_fetch(url)\n",
+      "fixedCode": "def ssrf_fixed(url):\n    if url != 'http://127.0.0.1:8093/public':\n        return 403, {'error': 'Destination is not approved'}\n    return fixture_fetch(url)\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-005",
+      "slug": "jwt",
+      "title": "Decode-only JWT authentication",
+      "cwe": "CWE-347",
+      "owasp": "API2:2023",
+      "severity": "High",
+      "path": "/jwt",
+      "attack": {
+        "token": "eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODA5MTl9."
+      },
+      "legitimate": {
+        "token": "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MDkxOX0.VEWjRMYjnqZHjzLcKNL-ZipQw92t8u66eB8Cd9E_bmk"
+      },
+      "rootCause": "Claims are decoded without validating signature, algorithm, audience or expiry.",
+      "impact": "Impersonate the fictional Bob identity.",
+      "source": "jwt",
+      "limitation": "Fixed HS256 verifier is educational; use a maintained JOSE library in production.",
+      "reference": "https://portswigger.net/web-security/jwt",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODA5MTl9. HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "18",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"subject\": \"bob\"}"
+      },
+      "after": {
+        "request": "GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODA5MTl9. HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 401,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "26",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"error\": \"Invalid token\"}"
+      },
+      "positive": {
+        "request": "GET /jwt?token=eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MDkxOX0.VEWjRMYjnqZHjzLcKNL-ZipQw92t8u66eB8Cd9E_bmk HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "20",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"subject\": \"alice\"}"
+      },
+      "additional": [],
+      "vulnerableCode": "def jwt_vulnerable(token):\n    # Decode-only verification mistake.\n    return decode_part(token.split('.')[1])['sub']\n",
+      "fixedCode": "def jwt_fixed(token):\n    head, body, signature = token.split('.')\n    header, claims = decode_part(head), decode_part(body)\n    expected = b64(hmac.digest(JWT_KEY, (head + '.' + body).encode(), 'sha256'))\n    if (header.get('alg') != 'HS256' or not hmac.compare_digest(signature, expected)\n            or claims.get('iss') != 'bountyproof' or claims.get('aud') != 'local-lab'\n            or type(claims.get('exp')) is not int or claims['exp'] <= time.time()\n            or claims.get('sub') not in ('alice', 'bob')):\n        raise ValueError('Invalid token')\n    return claims['sub']\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-006",
+      "slug": "oauth",
+      "title": "Account linking without session-bound state",
+      "cwe": "CWE-352",
+      "owasp": "A07:2021",
+      "severity": "High",
+      "path": "/oauth/callback",
+      "attack": {
+        "state": "attacker-state"
+      },
+      "legitimate": {
+        "state": "5lnBqW922nEtNuuwUbgMlCNuixH5y7Nj"
+      },
+      "rootCause": "Callback ignores state binding and permits unsolicited account linking.",
+      "impact": "Link the wrong fictional provider account.",
+      "source": "oauth",
+      "limitation": "Provider and code exchange are mocked; state lifecycle is real. PKCE and real provider integration are excluded.",
+      "reference": "https://portswigger.net/web-security/oauth",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /oauth/callback?state=attacker-state HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "44",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"linked_account\": \"fictional-provider-bob\"}"
+      },
+      "after": {
+        "request": "GET /oauth/callback?state=attacker-state HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 403,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "67",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"error\": \"State missing, expired, reused or not bound to session\"}"
+      },
+      "positive": {
+        "request": "GET /oauth/callback?state=5lnBqW922nEtNuuwUbgMlCNuixH5y7Nj HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "44",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"linked_account\": \"fictional-provider-bob\"}"
+      },
+      "additional": [
+        {
+          "request": "GET /oauth/callback?state=5lnBqW922nEtNuuwUbgMlCNuixH5y7Nj HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=fixture-alice",
+          "status": 403,
+          "headers": {
+            "Server": "BaseHTTP/0.6 Python/3.14.6",
+            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Content-Type": "application/json",
+            "Content-Length": "67",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+          },
+          "body": "{\"error\": \"State missing, expired, reused or not bound to session\"}"
+        }
+      ],
+      "vulnerableCode": "def oauth_vulnerable(state, cookie, states):\n    return 200, {'linked_account': 'fictional-provider-bob'}\n",
+      "fixedCode": "def oauth_fixed(state, cookie, states):\n    entry = states.get(state)\n    if not entry or entry[0] != cookie or entry[1] < time.monotonic():\n        return 403, {'error': 'State missing, expired, reused or not bound to session'}\n    del states[state]\n    return 200, {'linked_account': 'fictional-provider-bob'}\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-007",
+      "slug": "auth",
+      "title": "Session fixation at login",
+      "cwe": "CWE-384",
+      "owasp": "A07:2021",
+      "severity": "High",
+      "path": "/auth/login",
+      "attack": {
+        "password": "fictional-alice-password"
+      },
+      "legitimate": {},
+      "rootCause": "Successful login promotes the caller-selected session identifier.",
+      "impact": "Reuse the known session identifier after victim login.",
+      "source": "auth",
+      "limitation": "Fictional password is public; no credential guessing. Cookies omit Secure for loopback HTTP only.",
+      "reference": "https://portswigger.net/web-security/authentication",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /auth/login?password=fictional-alice-password HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=known-session",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "17",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'",
+          "Set-Cookie": "sid=known-session; HttpOnly; SameSite=Strict; Path=/"
+        },
+        "body": "{\"user\": \"alice\"}"
+      },
+      "after": {
+        "request": "GET /auth/login?password=fictional-alice-password HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=known-session",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "17",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'",
+          "Set-Cookie": "sid=eKEVeXq-ioeTODS899BRbA0VZNDgQHKkhkZkgyhG7lM; HttpOnly; SameSite=Strict; Path=/"
+        },
+        "body": "{\"user\": \"alice\"}"
+      },
+      "positive": {
+        "request": "GET /auth/me HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=eKEVeXq-ioeTODS899BRbA0VZNDgQHKkhkZkgyhG7lM",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "17",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"user\": \"alice\"}"
+      },
+      "additional": [
+        {
+          "request": "GET /auth/me HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=known-session",
+          "status": 200,
+          "headers": {
+            "Server": "BaseHTTP/0.6 Python/3.14.6",
+            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Content-Type": "application/json",
+            "Content-Length": "17",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+          },
+          "body": "{\"user\": \"alice\"}"
+        },
+        {
+          "request": "GET /auth/me HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=known-session",
+          "status": 401,
+          "headers": {
+            "Server": "BaseHTTP/0.6 Python/3.14.6",
+            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Content-Type": "application/json",
+            "Content-Length": "23",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+          },
+          "body": "{\"error\": \"No session\"}"
+        }
+      ],
+      "vulnerableCode": "def auth_vulnerable(password, sid, sessions):\n    if not hmac.compare_digest(password, PASSWORD):\n        return 401, {'error': 'Bad credentials'}, None\n    sessions[sid] = 'alice'\n    return 200, {'user': 'alice'}, sid\n",
+      "fixedCode": "def auth_fixed(password, sid, sessions):\n    if not hmac.compare_digest(password, PASSWORD):\n        return 401, {'error': 'Bad credentials'}, None\n    sessions.pop(sid, None)\n    fresh = secrets.token_urlsafe(32)\n    sessions[fresh] = 'alice'\n    return 200, {'user': 'alice'}, fresh\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-008",
+      "slug": "path",
+      "title": "Document path escapes public root",
+      "cwe": "CWE-22",
+      "owasp": "A01:2021",
+      "severity": "High",
+      "path": "/path",
+      "attack": {
+        "name": "../private/marker.txt"
+      },
+      "legitimate": {
+        "name": "hello.txt"
+      },
+      "rootCause": "Filesystem path is joined without checking the resolved containment boundary.",
+      "impact": "Read a fictional private marker outside the public directory.",
+      "source": "path",
+      "limitation": "Outer allowlist limits the reachable files to two fixture files.",
+      "reference": "https://portswigger.net/web-security/file-path-traversal",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /path?name=..%2Fprivate%2Fmarker.txt HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "41",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"content\": \"FICTIONAL_PRIVATE_MARKER\\n\"}"
+      },
+      "after": {
+        "request": "GET /path?name=..%2Fprivate%2Fmarker.txt HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 403,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "37",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"error\": \"Path escapes public root\"}"
+      },
+      "positive": {
+        "request": "GET /path?name=hello.txt HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "40",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"content\": \"Public fixture document\\n\"}"
+      },
+      "additional": [],
+      "vulnerableCode": "def path_vulnerable(name):\n    return (ROOT / 'public' / name).read_text()\n",
+      "fixedCode": "def path_fixed(name):\n    target = (ROOT / 'public' / name).resolve()\n    if not target.is_relative_to((ROOT / 'public').resolve()):\n        raise PermissionError('Path escapes public root')\n    return target.read_text()\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-009",
+      "slug": "command",
+      "title": "Shell command separator injection",
+      "cwe": "CWE-78",
+      "owasp": "A03:2021",
+      "severity": "High",
+      "path": "/command",
+      "attack": {
+        "value": "hello; printf INJECTED"
+      },
+      "legitimate": {
+        "value": "hello"
+      },
+      "rootCause": "User input is interpolated into a shell command string.",
+      "impact": "Execute a second harmless printf command.",
+      "source": "command",
+      "limitation": "Only two exact payloads are accepted. No arbitrary commands, networking or filesystem writes.",
+      "reference": "https://portswigger.net/web-security/os-command-injection",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /command?value=hello%3B+printf+INJECTED HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "27",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"output\": \"helloINJECTED\"}"
+      },
+      "after": {
+        "request": "GET /command?value=hello%3B+printf+INJECTED HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "36",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"output\": \"hello; printf INJECTED\"}"
+      },
+      "positive": {
+        "request": "GET /command?value=hello HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "19",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"output\": \"hello\"}"
+      },
+      "additional": [],
+      "vulnerableCode": "def command_vulnerable(value):\n    return subprocess.run('printf %s ' + value, shell=True, capture_output=True,\n                          text=True, timeout=1, check=True).stdout\n",
+      "fixedCode": "def command_fixed(value):\n    return subprocess.run(['printf', '%s', value], shell=False, capture_output=True,\n                          text=True, timeout=1, check=True).stdout\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    },
+    {
+      "id": "BP-010",
+      "slug": "business",
+      "title": "Client-controlled role escalation",
+      "cwe": "CWE-915",
+      "owasp": "API3:2023",
+      "severity": "High",
+      "path": "/business",
+      "attack": {
+        "role": "admin"
+      },
+      "legitimate": {
+        "role": "reader"
+      },
+      "rootCause": "A client-controlled role is trusted during a profile update.",
+      "impact": "Escalate the fictional user role to admin in the response.",
+      "source": "business",
+      "limitation": "Request-local profile only; no persistent administrator capabilities.",
+      "reference": "https://portswigger.net/web-security/logic-flaws",
+      "labs": "https://portswigger.net/web-security/all-labs",
+      "before": {
+        "request": "GET /business?role=admin HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "34",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"user\": \"alice\", \"role\": \"admin\"}"
+      },
+      "after": {
+        "request": "GET /business?role=admin HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 403,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "61",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"error\": \"Role changes require administrator authorization\"}"
+      },
+      "positive": {
+        "request": "GET /business?role=reader HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "status": 200,
+        "headers": {
+          "Server": "BaseHTTP/0.6 Python/3.14.6",
+          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "35",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'"
+        },
+        "body": "{\"user\": \"alice\", \"role\": \"reader\"}"
+      },
+      "additional": [],
+      "vulnerableCode": "def business_vulnerable(role):\n    return 200, {'user': 'alice', 'role': role}\n",
+      "fixedCode": "def business_fixed(role):\n    if role != 'reader':\n        return 403, {'error': 'Role changes require administrator authorization'}\n    return 200, {'user': 'alice', 'role': 'reader'}\n",
+      "status": "Verified over HTTP",
+      "checks": {
+        "reproduced": true,
+        "remediated": true,
+        "legitimateAccess": true
+      }
+    }
+  ]
+}

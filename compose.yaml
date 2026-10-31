@@ -1,0 +1,77 @@
+name: bountyproof
+x-controls: &controls
+  read_only: true
+  user: '10001:10001'
+  cap_drop: [ALL]
+  security_opt: ['no-new-privileges:true']
+  pids_limit: 32
+  mem_limit: 192m
+  cpus: 0.5
+  tmpfs: ['/tmp:rw,noexec,nosuid,size=8m']
+  restart: 'no'
+  init: true
+services:
+  dashboard:
+    <<: *controls
+    build: {context: ., target: dashboard}
+    networks: [management]
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:8090/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  vulnerable:
+    <<: *controls
+    profiles: [lab]
+    build: {context: ., target: lab}
+    environment: {LAB_MODE: vulnerable}
+    networks: [vulnerable]
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8091/health',timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  fixed:
+    <<: *controls
+    profiles: [lab]
+    build: {context: ., target: lab}
+    environment: {LAB_MODE: fixed}
+    networks: [fixed]
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8092/health',timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  dashboard-gateway:
+    <<: *controls
+    build: {context: ., target: dashboard}
+    command: ['node', 'dist/src/gateway.js']
+    environment: {SERVICE: dashboard}
+    ports: ['127.0.0.1:8090:8090']
+    networks: [management, dashboard-ingress]
+    depends_on: {dashboard: {condition: service_healthy}}
+  vulnerable-gateway:
+    <<: *controls
+    profiles: [lab]
+    build: {context: ., target: dashboard}
+    command: ['node', 'dist/src/gateway.js']
+    environment: {SERVICE: vulnerable}
+    ports: ['127.0.0.1:8091:8091']
+    networks: [vulnerable, vulnerable-ingress]
+    depends_on: {vulnerable: {condition: service_healthy}}
+  fixed-gateway:
+    <<: *controls
+    profiles: [lab]
+    build: {context: ., target: dashboard}
+    command: ['node', 'dist/src/gateway.js']
+    environment: {SERVICE: fixed}
+    ports: ['127.0.0.1:8092:8092']
+    networks: [fixed, fixed-ingress]
+    depends_on: {fixed: {condition: service_healthy}}
+networks:
+  dashboard-ingress: {}
+  vulnerable-ingress: {}
+  fixed-ingress: {}
+  management: {internal: true}
+  vulnerable: {internal: true}
+  fixed: {internal: true}

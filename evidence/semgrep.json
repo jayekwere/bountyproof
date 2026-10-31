@@ -1,0 +1,161 @@
+{
+  "version": "1.166.0",
+  "results": [
+    {
+      "check_id": "semgrep.python-sql-concatenation",
+      "path": "lab/scenarios.py",
+      "start": {
+        "line": 54,
+        "col": 16,
+        "offset": 1819
+      },
+      "end": {
+        "line": 54,
+        "col": 100,
+        "offset": 1903
+      },
+      "extra": {
+        "message": "Concatenated SQL crosses the query/data boundary.",
+        "metadata": {},
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "semgrep.python-unescaped-html",
+      "path": "lab/scenarios.py",
+      "start": {
+        "line": 64,
+        "col": 5,
+        "offset": 2283
+      },
+      "end": {
+        "line": 64,
+        "col": 73,
+        "offset": 2351
+      },
+      "extra": {
+        "message": "Raw input concatenated into an HTML response.",
+        "metadata": {},
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "semgrep.python-shell-execution",
+      "path": "lab/scenarios.py",
+      "start": {
+        "line": 152,
+        "col": 12,
+        "offset": 5266
+      },
+      "end": {
+        "line": 153,
+        "col": 60,
+        "offset": 5395
+      },
+      "extra": {
+        "message": "Shell execution requires review. Only the caged command fixture may use it.",
+        "metadata": {},
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "lab/catalog.py",
+      "lab/internal.py",
+      "lab/scenarios.py",
+      "lab/server.py",
+      "src/cli.ts",
+      "src/gateway.ts",
+      "src/replay.ts",
+      "src/server.ts",
+      "web/app.js"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 0.0062198638916015625,
+    "profiling_times": {
+      "config_time": 2.8958048820495605,
+      "core_time": 1.4429960250854492,
+      "ignores_time": 0.0001289844512939453,
+      "total_time": 4.352650880813599
+    },
+    "parsing_time": {
+      "total_time": 0.0,
+      "per_file_time": {
+        "mean": 0.0,
+        "std_dev": 0.0
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_files": []
+    },
+    "scanning_time": {
+      "total_time": 0.2097771167755127,
+      "per_file_time": {
+        "mean": 0.02330856853061252,
+        "std_dev": 0.00026959251341468417
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_files": []
+    },
+    "matching_time": {
+      "total_time": 0.0,
+      "per_file_and_rule_time": {
+        "mean": 0.0,
+        "std_dev": 0.0
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_rules_on_files": []
+    },
+    "tainting_time": {
+      "total_time": 0.0,
+      "per_def_and_rule_time": {
+        "mean": 0.0,
+        "std_dev": 0.0
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_rules_on_defs": []
+    },
+    "fixpoint_timeouts": [],
+    "prefiltering": {
+      "project_level_time": 0.0,
+      "file_level_time": 0.0,
+      "rules_with_project_prefilters_ratio": 0.0,
+      "rules_with_file_prefilters_ratio": 0.8181818181818182,
+      "rules_selected_ratio": 0.2727272727272727,
+      "rules_matched_ratio": 0.2727272727272727
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 128256000
+  },
+  "engine_requested": "OSS",
+  "skipped_rules": [],
+  "profiling_results": []
+}

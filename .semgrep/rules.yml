@@ -1,0 +1,34 @@
+rules:
+  - id: python-shell-execution
+    languages: [python]
+    severity: ERROR
+    message: Shell execution requires review. Only the caged command fixture may use it.
+    pattern: subprocess.run(..., shell=True, ...)
+  - id: python-sql-concatenation
+    languages: [python]
+    severity: ERROR
+    message: Concatenated SQL crosses the query/data boundary.
+    pattern: $DB.execute($A + $B, ...)
+  - id: python-unescaped-html
+    languages: [python]
+    severity: ERROR
+    message: Raw input concatenated into an HTML response.
+    patterns:
+      - pattern: return '<!doctype html><title>Search result</title><p>' + $Q + '</p>'
+      - metavariable-regex:
+          metavariable: $Q
+          regex: ^q$
+  - id: typescript-dynamic-eval
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Dynamic evaluation is prohibited in the management surface.
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: new Function(...)
+  - id: typescript-shell-execution
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Shell execution is prohibited in the management surface.
+    pattern-either:
+      - pattern: exec(...)
+      - pattern: execSync(...)

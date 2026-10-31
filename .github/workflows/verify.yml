@@ -1,0 +1,47 @@
+name: Verify
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '26.3.0'
+          cache: npm
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.14'
+      - run: npm ci --ignore-scripts
+      - run: npm run verify
+      - run: npm run evidence
+      - run: python3 -m venv .scanner && .scanner/bin/python -m pip install --require-hashes -r requirements-scanner.lock
+      - run: python3 -m tools.sast --semgrep .scanner/bin/semgrep
+      - run: npm audit --audit-level=high
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - run: docker compose --profile lab up -d --build --wait
+      - run: python3 -m tools.docker_verify
+      - run: docker compose --profile lab down
+        if: always()
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: verified-local-research
+          path: |
+            evidence/
+            reports/
+            docs/dashboard*.png
+          retention-days: 14

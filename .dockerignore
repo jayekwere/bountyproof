@@ -1,0 +1,8 @@
+.git
+node_modules
+.scanner
+.runtime
+**/__pycache__
+test-results
+playwright-report
+.env
