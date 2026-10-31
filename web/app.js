@@ -14,6 +14,9 @@ function choose(item) {
   $('placeholder').hidden=true; $('finding').hidden=false;
   for(const [id,value] of Object.entries({'finding-id':item.id+' / '+item.slug.toUpperCase(),'finding-title':item.title,mapping:item.cwe+' · '+item.owasp,impact:item.impact,cause:item.rootCause,limitations:item.limitation,'before':http(item.before),'after':http(item.after),positive:http(item.positive),'vuln-code':item.vulnerableCode,'fixed-code':item.fixedCode,'status-before':String(item.before.status),'status-after':String(item.after.status)})) $(id).textContent=value;
   $('reference').href=item.reference;
+  $('supporting').hidden=!item.additional.length;
+  $('supporting').open=false;
+  $('additional').replaceChildren(...item.additional.map(response=>{const pre=document.createElement('pre');pre.textContent=http(response);return pre;}));
   $('checks').replaceChildren(...['Exploit reproduced','Fix verified','Legitimate access preserved'].map(label=>{const span=document.createElement('span');span.className='check';span.textContent='✓ '+label;return span;}));
   for(const row of document.querySelectorAll('.finding-row')) row.classList.toggle('active',row.dataset.id===item.id);
 }
@@ -57,7 +60,7 @@ for(const [index,button] of tabs.entries()){
 $('export-all').addEventListener('click',()=>download('bountyproof-evidence.json',JSON.stringify(data,null,2),'application/json'));
 $('export-report').addEventListener('click',()=>{
   if(!selected)return;const item=selected;
-  const text=['# '+item.id+': '+item.title,'Educational local fixture finding. '+item.severity+' · '+item.cwe+' · '+item.owasp,'## Scope\nOwned local fixtures. Fictional data. No third-party finding.','## Root cause\n'+item.rootCause,'## Impact\n'+item.impact,...[['Vulnerable','before'],['Remediated','after'],['Legitimate access','positive']].map(([label,key])=>'## '+label+'\n```http\n'+http(item[key])+'\n```'),'## Vulnerable code\n```python\n'+item.vulnerableCode+'```','## Corrected code\n```python\n'+item.fixedCode+'```','## Regression\n'+JSON.stringify(item.checks),'## Limitations\n'+item.limitation,'## Reference\n'+item.reference,'Collected: '+data.generatedAt+'\nSource SHA-256: '+data.sourceSha256].join('\n\n');
+  const text=['# '+item.id+': '+item.title,'Educational local fixture finding. '+item.severity+' · '+item.cwe+' · '+item.owasp,'## Scope\nOwned local fixtures. Fictional data. No third-party finding.','## Root cause\n'+item.rootCause,'## Impact\n'+item.impact,...[['Vulnerable','before'],['Remediated','after'],['Legitimate access','positive']].map(([label,key])=>'## '+label+'\n```http\n'+http(item[key])+'\n```'),...item.additional.map((response,index)=>'## Supporting regression request '+(index+1)+'\n```http\n'+http(response)+'\n```'),'## Vulnerable code\n```python\n'+item.vulnerableCode+'```','## Corrected code\n```python\n'+item.fixedCode+'```','## Regression\n'+JSON.stringify(item.checks),'## Limitations\n'+item.limitation,'## Reference\n'+item.reference,'Collected: '+data.generatedAt+'\nSource SHA-256: '+data.sourceSha256].join('\n\n');
   download(item.id+'-'+item.slug+'.md',text,'text/markdown');
 });
 

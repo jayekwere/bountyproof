@@ -11,7 +11,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def replay(mode, path, params=None, headers=None):
-    if mode not in ('vulnerable', 'fixed') or path not in ('/health', '/api/invoices', '/sql', '/xss', '/ssrf', '/jwt', '/oauth/start', '/oauth/callback', '/auth/login', '/auth/me', '/path', '/command', '/business'):
+    if mode not in ('vulnerable', 'fixed') or path not in ('/health', '/api/invoices', '/sql', '/xss', '/ssrf', '/jwt', '/oauth/start', '/oauth/callback', '/auth/login', '/auth/me', '/path', '/command', '/business', '/business/admin'):
         raise ValueError('Outside local fixture scope')
     port = 8091 if mode == 'vulnerable' else 8092
     query = urllib.parse.urlencode(params or {})

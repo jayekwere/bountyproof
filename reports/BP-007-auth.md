@@ -2,7 +2,7 @@
 
 Educational local fixture finding. Severity: High. CWE-384; A07:2021.
 
-Evidence collected: 2026-10-31T21:01:19.665465+00:00
+Evidence collected: 2026-10-31T21:03:54.576611+00:00
 
 ## Scope
 Owned local lab only. Fictional identities and data. No third-party disclosure or bounty claim.
@@ -25,7 +25,7 @@ Cookie: sid=known-session
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 17
 Cache-Control: no-store
@@ -45,13 +45,13 @@ Cookie: sid=known-session
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 17
 Cache-Control: no-store
 X-Content-Type-Options: nosniff
 Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
-Set-Cookie: sid=IP3H0erlLoVTMnljxDafCTMG2SWUcyUJ-H2mbEHnL0Q; HttpOnly; SameSite=Strict; Path=/
+Set-Cookie: sid=0wdP43JvByT2HQFzJbWR06hXjbrlAVxdXS3RC02t00M; HttpOnly; SameSite=Strict; Path=/
 
 {"user": "alice"}
 ```
@@ -61,11 +61,11 @@ Set-Cookie: sid=IP3H0erlLoVTMnljxDafCTMG2SWUcyUJ-H2mbEHnL0Q; HttpOnly; SameSite=
 GET /auth/me HTTP/1.1
 Host: 127.0.0.1:8092
 Authorization: Bearer fixture-alice
-Cookie: sid=IP3H0erlLoVTMnljxDafCTMG2SWUcyUJ-H2mbEHnL0Q
+Cookie: sid=0wdP43JvByT2HQFzJbWR06hXjbrlAVxdXS3RC02t00M
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 17
 Cache-Control: no-store
@@ -73,6 +73,44 @@ X-Content-Type-Options: nosniff
 Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
 
 {"user": "alice"}
+```
+
+## Additional regression evidence 1
+```http
+GET /auth/me HTTP/1.1
+Host: 127.0.0.1:8091
+Authorization: Bearer fixture-alice
+Cookie: sid=known-session
+
+HTTP/1.1 200
+Server: BaseHTTP/0.6 Python/3.14.6
+Date: Sat, 31 Oct 2026 21:03:54 GMT
+Content-Type: application/json
+Content-Length: 17
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
+
+{"user": "alice"}
+```
+
+## Additional regression evidence 2
+```http
+GET /auth/me HTTP/1.1
+Host: 127.0.0.1:8092
+Authorization: Bearer fixture-alice
+Cookie: sid=known-session
+
+HTTP/1.1 401
+Server: BaseHTTP/0.6 Python/3.14.6
+Date: Sat, 31 Oct 2026 21:03:54 GMT
+Content-Type: application/json
+Content-Length: 23
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
+
+{"error": "No session"}
 ```
 
 ## Vulnerable code

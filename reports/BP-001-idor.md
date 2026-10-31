@@ -2,7 +2,7 @@
 
 Educational local fixture finding. Severity: High. CWE-639; API1:2023.
 
-Evidence collected: 2026-10-31T21:01:19.665465+00:00
+Evidence collected: 2026-10-31T21:03:54.576611+00:00
 
 ## Scope
 Owned local lab only. Fictional identities and data. No third-party disclosure or bounty claim.
@@ -24,7 +24,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 30
 Cache-Control: no-store
@@ -42,7 +42,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 403
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 22
 Cache-Control: no-store
@@ -60,7 +60,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 32
 Cache-Control: no-store
@@ -68,6 +68,24 @@ X-Content-Type-Options: nosniff
 Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
 
 {"owner": "alice", "total": 120}
+```
+
+## Additional regression evidence 1
+```http
+GET /api/invoices?id=2 HTTP/1.1
+Host: 127.0.0.1:8092
+Authorization: Bearer fixture-bob
+
+HTTP/1.1 200
+Server: BaseHTTP/0.6 Python/3.14.6
+Date: Sat, 31 Oct 2026 21:03:54 GMT
+Content-Type: application/json
+Content-Length: 30
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
+
+{"owner": "bob", "total": 450}
 ```
 
 ## Vulnerable code

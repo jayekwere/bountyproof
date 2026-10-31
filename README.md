@@ -50,7 +50,7 @@ The TypeScript CLI accepts the ten catalog slugs below and replays their recorde
 | BP-007 | auth | Login promotes a known session ID | Rotate session ID and invalidate old session |
 | BP-008 | path | Traversal reads private fixture file | Resolved path containment enforced |
 | BP-009 | command | Shell separator executes second printf | Argument array with shell disabled |
-| BP-010 | business | Profile input sets admin role | Server rejects unauthorized role changes |
+| BP-010 | business | Profile input grants admin-only audit access | Server rejects unauthorized role changes |
 
 The findings are educational local discoveries, with contextual High severity rather than externally validated CVSS scores. [Individual reports](reports/) include requests, responses, vulnerable/fixed code, CWE, versioned OWASP mapping, impact, regression results and limitations. SQL, XSS, session, path and command mappings use OWASP Top 10 **2021**, explicitly as a historical taxonomy; API mappings use **2023**.
 

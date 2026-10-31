@@ -175,6 +175,7 @@ class Lab:
         self.mode = mode
         self.sessions = dict(SESSIONS)
         self.states = {}
+        self.roles = {'alice':'reader','bob':'reader'}
 
     def call(self, path, params, headers):
         get = lambda key, default='': params.get(key, [default])[0]
@@ -208,10 +209,14 @@ class Lab:
         elif path == '/auth/me':
             user = self.sessions.get(cookie)
             code, body = (200, {'user': user}) if user else (401, {'error': 'No session'})
-        elif path not in ('/sql', '/xss', '/ssrf', '/jwt', '/path', '/command', '/business'):
+        elif path not in ('/sql', '/xss', '/ssrf', '/jwt', '/path', '/command', '/business', '/business/admin'):
             return 404, {'error': 'Not found'}, extra
         elif auth not in SESSIONS:
             return 401, {'error': 'Fixture bearer required'}, extra
+        elif path == '/business/admin':
+            if self.roles[SESSIONS[auth]] != 'admin':
+                return 403, {'error': 'Administrator role required'}, extra
+            return 200, {'audit': 'FICTIONAL_ADMIN_AUDIT_MARKER'}, extra
         elif path == '/sql':
             code, body = 200, {'rows': fn('sql')(get('q'))}
         elif path == '/xss':
@@ -238,4 +243,6 @@ class Lab:
             code, body = 200, {'output': fn('command')(get('value'))}
         else:
             code, body = fn('business')(get('role', 'reader'))
+            if code == 200:
+                self.roles[SESSIONS[auth]] = body['role']
         return code, body, extra

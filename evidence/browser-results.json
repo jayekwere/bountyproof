@@ -111,12 +111,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 66,
+                  "duration": 55,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-31T20:59:39.802Z",
+                  "startTime": "2026-10-31T21:04:19.523Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -145,12 +145,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 525,
+                  "duration": 410,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-31T20:59:40.148Z",
+                  "startTime": "2026-10-31T21:04:19.940Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -179,12 +179,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1172,
+                  "duration": 1195,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-31T20:59:41.144Z",
+                  "startTime": "2026-10-31T21:04:20.890Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -213,12 +213,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 14,
+                  "duration": 7,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-31T20:59:42.326Z",
+                  "startTime": "2026-10-31T21:04:22.096Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -228,7 +228,7 @@
           ],
           "id": "921e070f285a8b470d11-11e7b3e058a7464a1d90",
           "file": "workbench.spec.ts",
-          "line": 72,
+          "line": 76,
           "column": 1
         }
       ]
@@ -236,8 +236,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-31T20:59:39.351Z",
-    "duration": 3766.819,
+    "startTime": "2026-10-31T21:04:18.389Z",
+    "duration": 4543.735,
     "expected": 4,
     "skipped": 0,
     "unexpected": 0,

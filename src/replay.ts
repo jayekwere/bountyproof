@@ -1,5 +1,5 @@
 import http from 'node:http';
-const paths = new Set(['/health','/api/invoices','/sql','/xss','/ssrf','/jwt','/oauth/start','/oauth/callback','/auth/login','/auth/me','/path','/command','/business']);
+const paths = new Set(['/health','/api/invoices','/sql','/xss','/ssrf','/jwt','/oauth/start','/oauth/callback','/auth/login','/auth/me','/path','/command','/business', '/business/admin']);
 export function replay(mode: string, path: string, params: Record<string,string> = {}): Promise<{status: number; body: string}> {
   if (!['fixed','vulnerable'].includes(mode) || !paths.has(path)) throw new Error('Outside owned lab scope');
   const query = new URLSearchParams(params).toString();

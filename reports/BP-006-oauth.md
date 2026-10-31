@@ -2,7 +2,7 @@
 
 Educational local fixture finding. Severity: High. CWE-352; A07:2021.
 
-Evidence collected: 2026-10-31T21:01:19.665465+00:00
+Evidence collected: 2026-10-31T21:03:54.576611+00:00
 
 ## Scope
 Owned local lab only. Fictional identities and data. No third-party disclosure or bounty claim.
@@ -24,7 +24,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 44
 Cache-Control: no-store
@@ -42,7 +42,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 403
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 67
 Cache-Control: no-store
@@ -54,14 +54,14 @@ Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-a
 
 ## Legitimate operation
 ```http
-GET /oauth/callback?state=KldqO_JewuRZLnJDo6PelB9V-WYF0FOb HTTP/1.1
+GET /oauth/callback?state=lZFuAXVA_f-EIap-oInLEBM8Pqg3_AKm HTTP/1.1
 Host: 127.0.0.1:8092
 Authorization: Bearer fixture-alice
 Cookie: sid=fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 44
 Cache-Control: no-store
@@ -69,6 +69,25 @@ X-Content-Type-Options: nosniff
 Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
 
 {"linked_account": "fictional-provider-bob"}
+```
+
+## Additional regression evidence 1
+```http
+GET /oauth/callback?state=lZFuAXVA_f-EIap-oInLEBM8Pqg3_AKm HTTP/1.1
+Host: 127.0.0.1:8092
+Authorization: Bearer fixture-alice
+Cookie: sid=fixture-alice
+
+HTTP/1.1 403
+Server: BaseHTTP/0.6 Python/3.14.6
+Date: Sat, 31 Oct 2026 21:03:54 GMT
+Content-Type: application/json
+Content-Length: 67
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
+
+{"error": "State missing, expired, reused or not bound to session"}
 ```
 
 ## Vulnerable code

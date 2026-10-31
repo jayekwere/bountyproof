@@ -2,7 +2,7 @@
 
 Educational local fixture finding. Severity: High. CWE-915; API3:2023.
 
-Evidence collected: 2026-10-31T21:01:19.665465+00:00
+Evidence collected: 2026-10-31T21:03:54.576611+00:00
 
 ## Scope
 Owned local lab only. Fictional identities and data. No third-party disclosure or bounty claim.
@@ -11,7 +11,7 @@ Owned local lab only. Fictional identities and data. No third-party disclosure o
 A client-controlled role is trusted during a profile update.
 
 ## Impact
-Escalate the fictional user role to admin in the response.
+Escalate to administrator and read the fictional admin-only audit marker.
 
 ## Reproduction
 Start `python3 -m tools.lab`. Replay the exact request below against port 8091, then port 8092. Use `python3 -m tools.verify` to assert the entire lifecycle.
@@ -24,7 +24,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 34
 Cache-Control: no-store
@@ -42,7 +42,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 403
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 61
 Cache-Control: no-store
@@ -60,7 +60,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 35
 Cache-Control: no-store
@@ -68,6 +68,42 @@ X-Content-Type-Options: nosniff
 Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
 
 {"user": "alice", "role": "reader"}
+```
+
+## Additional regression evidence 1
+```http
+GET /business/admin HTTP/1.1
+Host: 127.0.0.1:8091
+Authorization: Bearer fixture-alice
+
+HTTP/1.1 200
+Server: BaseHTTP/0.6 Python/3.14.6
+Date: Sat, 31 Oct 2026 21:03:54 GMT
+Content-Type: application/json
+Content-Length: 41
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
+
+{"audit": "FICTIONAL_ADMIN_AUDIT_MARKER"}
+```
+
+## Additional regression evidence 2
+```http
+GET /business/admin HTTP/1.1
+Host: 127.0.0.1:8092
+Authorization: Bearer fixture-alice
+
+HTTP/1.1 403
+Server: BaseHTTP/0.6 Python/3.14.6
+Date: Sat, 31 Oct 2026 21:03:54 GMT
+Content-Type: application/json
+Content-Length: 40
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'
+
+{"error": "Administrator role required"}
 ```
 
 ## Vulnerable code
@@ -88,7 +124,7 @@ def business_fixed(role):
 Reproduction, remediation, and legitimate access assertions passed over HTTP. XSS script execution additionally requires the Playwright suite.
 
 ## Limitations
-Request-local profile only; no persistent administrator capabilities.
+Roles persist only in process memory; the protected administrator resource is a fictional marker. Restart resets roles.
 
 ## Learning references
 https://portswigger.net/web-security/logic-flaws

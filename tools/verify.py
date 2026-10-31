@@ -68,6 +68,12 @@ def verify():
             assert body(before)['output'] == 'helloINJECTED'
             assert body(after)['output'] == 'hello; printf INJECTED'
         extras = []
+        if slug == 'business':
+            admin_before = replay('vulnerable','/business/admin')
+            admin_after = replay('fixed','/business/admin')
+            assert admin_before['status'] == 200 and body(admin_before) == {'audit':'FICTIONAL_ADMIN_AUDIT_MARKER'}
+            assert admin_after['status'] == 403
+            extras += [admin_before,admin_after]
         if slug == 'oauth':
             start = replay('fixed','/oauth/start',headers={'Cookie':'sid=fixture-alice'})
             legit = {'state':body(start)['state']}

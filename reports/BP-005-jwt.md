@@ -2,7 +2,7 @@
 
 Educational local fixture finding. Severity: High. CWE-347; API2:2023.
 
-Evidence collected: 2026-10-31T21:01:19.665465+00:00
+Evidence collected: 2026-10-31T21:03:54.576611+00:00
 
 ## Scope
 Owned local lab only. Fictional identities and data. No third-party disclosure or bounty claim.
@@ -18,13 +18,13 @@ Start `python3 -m tools.lab`. Replay the exact request below against port 8091, 
 
 ## Vulnerable evidence
 ```http
-GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODEwNzl9. HTTP/1.1
+GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODEyMzR9. HTTP/1.1
 Host: 127.0.0.1:8091
 Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 18
 Cache-Control: no-store
@@ -36,13 +36,13 @@ Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-a
 
 ## Remediation evidence
 ```http
-GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODEwNzl9. HTTP/1.1
+GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODEyMzR9. HTTP/1.1
 Host: 127.0.0.1:8092
 Authorization: Bearer fixture-alice
 
 HTTP/1.1 401
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 26
 Cache-Control: no-store
@@ -54,13 +54,13 @@ Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-a
 
 ## Legitimate operation
 ```http
-GET /jwt?token=eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MTA3OX0.2OumrG1fFCWM5ihQp237CnNoKakLyxVc3ssDJB90rSU HTTP/1.1
+GET /jwt?token=eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MTIzNH0.NBokgvnKSas0fZyE-3A1JOW235Aef7WwNi_jbTLTJ40 HTTP/1.1
 Host: 127.0.0.1:8092
 Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 21:01:19 GMT
+Date: Sat, 31 Oct 2026 21:03:54 GMT
 Content-Type: application/json
 Content-Length: 20
 Cache-Control: no-store

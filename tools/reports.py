@@ -11,8 +11,9 @@ def report(item, generated):
                 '## Scope\nOwned local lab only. Fictional identities and data. No third-party disclosure or bounty claim.',
                 '## Root cause\n'+item['rootCause'], '## Impact\n'+item['impact'],
                 '## Reproduction\nStart `python3 -m tools.lab`. Replay the exact request below against port 8091, then port 8092. Use `python3 -m tools.verify` to assert the entire lifecycle.']
-    for label,key in [('Vulnerable evidence','before'),('Remediation evidence','after'),('Legitimate operation','positive')]:
-        response = item[key]
+    responses = [('Vulnerable evidence',item['before']),('Remediation evidence',item['after']),('Legitimate operation',item['positive'])]
+    responses += [(f'Additional regression evidence {index}',value) for index,value in enumerate(item['additional'],1)]
+    for label,response in responses:
         sections.append('## '+label+'\n```http\n'+response['request']+'\r\n\r\nHTTP/1.1 '+str(response['status'])+'\r\n'+'\r\n'.join(k+': '+v for k,v in response['headers'].items())+'\r\n\r\n'+response['body']+'\n```')
     sections += ['## Vulnerable code\n```python\n'+item['vulnerableCode']+'```',
                  '## Corrected code\n```python\n'+item['fixedCode']+'```',

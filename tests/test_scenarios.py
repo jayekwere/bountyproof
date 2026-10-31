@@ -72,3 +72,12 @@ class FixedBoundaryTests(unittest.TestCase):
         self.assertEqual(lab.call('/auth/login', {'password':['fictional-alice-password']}, {})[0],429)
         lab.states = {str(i): ('fixture-alice',time.monotonic()+60) for i in range(100)}
         self.assertEqual(lab.call('/oauth/start', {}, {'Cookie':'sid=fixture-alice'})[0],429)
+
+    def test_business_role_gates_actual_admin_resource(self):
+        for mode in ('vulnerable','fixed'):
+            lab = Lab(mode)
+            headers = {'Authorization':'Bearer fixture-alice'}
+            self.assertEqual(lab.call('/business/admin',{},headers)[0],403)
+            lab.call('/business',{'role':['admin']},headers)
+            self.assertEqual(lab.call('/business/admin',{},headers)[0],200 if mode == 'vulnerable' else 403)
+            self.assertEqual(lab.call('/business/admin',{}, {'Authorization':'Bearer fixture-bob'})[0],403)

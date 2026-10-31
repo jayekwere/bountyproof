@@ -48,6 +48,10 @@ test('dashboard inspects every finding, filters, exports reports and responds to
     await page.locator(`[data-id="${finding.id}"]`).click();
     await expect(page.locator('#finding-title')).toHaveText(finding.title);
   }
+  await page.locator('[data-id="BP-010"]').click();
+  await page.locator('#supporting summary').click();
+  await expect(page.locator('#additional')).toContainText('FICTIONAL_ADMIN_AUDIT_MARKER');
+  await expect(page.locator('#additional')).toContainText('HTTP/1.1 403');
   await page.locator('[data-id="BP-001"]').click();
   await page.evaluate(()=>window.scrollTo(0,0));
   await page.screenshot({path:'docs/dashboard.png',fullPage:true});
