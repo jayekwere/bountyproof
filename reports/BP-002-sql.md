@@ -2,7 +2,7 @@
 
 Educational local fixture finding. Severity: High. CWE-89; A03:2021.
 
-Evidence collected: 2026-10-31T20:58:39.639313+00:00
+Evidence collected: 2026-10-31T21:01:19.665465+00:00
 
 ## Scope
 Owned local lab only. Fictional identities and data. No third-party disclosure or bounty claim.
@@ -24,7 +24,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 20:58:39 GMT
+Date: Sat, 31 Oct 2026 21:01:19 GMT
 Content-Type: application/json
 Content-Length: 48
 Cache-Control: no-store
@@ -42,7 +42,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 20:58:39 GMT
+Date: Sat, 31 Oct 2026 21:01:19 GMT
 Content-Type: application/json
 Content-Length: 12
 Cache-Control: no-store
@@ -60,7 +60,7 @@ Authorization: Bearer fixture-alice
 
 HTTP/1.1 200
 Server: BaseHTTP/0.6 Python/3.14.6
-Date: Sat, 31 Oct 2026 20:58:39 GMT
+Date: Sat, 31 Oct 2026 21:01:19 GMT
 Content-Type: application/json
 Content-Length: 26
 Cache-Control: no-store

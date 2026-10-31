@@ -45,6 +45,17 @@ def verify():
         before = replay('vulnerable', item['path'], attack, {'Cookie':'sid=known-session'} if slug == 'auth' else None)
         after = replay('fixed', item['path'], attack, {'Cookie':'sid=known-session'} if slug == 'auth' else None)
         assert before['status'] == 200, (slug, before)
+        exploit_values = {
+            'idor': {'owner':'bob','total':450},
+            'ssrf': {'content':'FICTIONAL_INTERNAL_MARKER'},
+            'jwt': {'subject':'bob'},
+            'oauth': {'linked_account':'fictional-provider-bob'},
+            'auth': {'user':'alice'},
+            'business': {'user':'alice','role':'admin'},
+            'path': {'content':'FICTIONAL_PRIVATE_MARKER\n'},
+        }
+        if slug in exploit_values:
+            assert body(before) == exploit_values[slug], (slug,before)
         if slug in ('idor','ssrf','oauth','path','business'):
             assert after['status'] == 403, (slug, after)
         elif slug == 'jwt':
@@ -74,9 +85,24 @@ def verify():
         else:
             valid = replay('fixed', item['path'], legit)
         assert valid['status'] == 200, (slug, valid)
+        positive_values = {
+            'idor': {'owner':'alice','total':120},
+            'sql': {'rows':[['Alice note']]},
+            'ssrf': {'content':'Public stock: 7'},
+            'jwt': {'subject':'alice'},
+            'oauth': {'linked_account':'fictional-provider-bob'},
+            'auth': {'user':'alice'},
+            'path': {'content':'Public fixture document\n'},
+            'command': {'output':'hello'},
+            'business': {'user':'alice','role':'reader'},
+        }
+        if slug == 'xss':
+            assert valid['body'] == '<!doctype html><title>Search result</title><p>hello</p>'
+        else:
+            assert body(valid) == positive_values[slug], (slug,valid)
         if slug == 'idor':
             bob = replay('fixed',item['path'],attack,{'Authorization':'Bearer fixture-bob'})
-            assert bob['status'] == 200
+            assert bob['status'] == 200 and body(bob) == {'owner':'bob','total':450}
             extras.append(bob)
         source = item['source']
         if source == 'invoice':

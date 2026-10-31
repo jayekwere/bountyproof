@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T20:58:39.639313+00:00",
+  "generatedAt": "2026-10-31T21:01:19.665465+00:00",
   "sourceSha256": "72cb8f0290dcb4bf3debdbdf45bac0d4e3b3a447207220386912f6e5433ebf8b",
   "scope": "Owned local fictional fixtures only",
   "findings": [
@@ -29,7 +29,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "30",
           "Cache-Control": "no-store",
@@ -43,7 +43,7 @@
         "status": 403,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "22",
           "Cache-Control": "no-store",
@@ -57,7 +57,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "32",
           "Cache-Control": "no-store",
@@ -72,7 +72,7 @@
           "status": 200,
           "headers": {
             "Server": "BaseHTTP/0.6 Python/3.14.6",
-            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
             "Content-Type": "application/json",
             "Content-Length": "30",
             "Cache-Control": "no-store",
@@ -116,7 +116,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "48",
           "Cache-Control": "no-store",
@@ -130,7 +130,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "12",
           "Cache-Control": "no-store",
@@ -144,7 +144,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "26",
           "Cache-Control": "no-store",
@@ -188,7 +188,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "text/html; charset=utf-8",
           "Content-Length": "80",
           "Cache-Control": "no-store",
@@ -202,7 +202,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "text/html; charset=utf-8",
           "Content-Length": "92",
           "Cache-Control": "no-store",
@@ -216,7 +216,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "text/html; charset=utf-8",
           "Content-Length": "55",
           "Cache-Control": "no-store",
@@ -260,7 +260,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "40",
           "Cache-Control": "no-store",
@@ -274,7 +274,7 @@
         "status": 403,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "40",
           "Cache-Control": "no-store",
@@ -288,7 +288,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "30",
           "Cache-Control": "no-store",
@@ -316,10 +316,10 @@
       "severity": "High",
       "path": "/jwt",
       "attack": {
-        "token": "eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODA5MTl9."
+        "token": "eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODEwNzl9."
       },
       "legitimate": {
-        "token": "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MDkxOX0.VEWjRMYjnqZHjzLcKNL-ZipQw92t8u66eB8Cd9E_bmk"
+        "token": "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MTA3OX0.2OumrG1fFCWM5ihQp237CnNoKakLyxVc3ssDJB90rSU"
       },
       "rootCause": "Claims are decoded without validating signature, algorithm, audience or expiry.",
       "impact": "Impersonate the fictional Bob identity.",
@@ -328,11 +328,11 @@
       "reference": "https://portswigger.net/web-security/jwt",
       "labs": "https://portswigger.net/web-security/all-labs",
       "before": {
-        "request": "GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODA5MTl9. HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
+        "request": "GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODEwNzl9. HTTP/1.1\r\nHost: 127.0.0.1:8091\r\nAuthorization: Bearer fixture-alice",
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "18",
           "Cache-Control": "no-store",
@@ -342,11 +342,11 @@
         "body": "{\"subject\": \"bob\"}"
       },
       "after": {
-        "request": "GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODA5MTl9. HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "request": "GET /jwt?token=eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIn0.eyJzdWIiOiAiYm9iIiwgImlzcyI6ICJib3VudHlwcm9vZiIsICJhdWQiOiAibG9jYWwtbGFiIiwgImV4cCI6IDE3OTM0ODEwNzl9. HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
         "status": 401,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "26",
           "Cache-Control": "no-store",
@@ -356,11 +356,11 @@
         "body": "{\"error\": \"Invalid token\"}"
       },
       "positive": {
-        "request": "GET /jwt?token=eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MDkxOX0.VEWjRMYjnqZHjzLcKNL-ZipQw92t8u66eB8Cd9E_bmk HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
+        "request": "GET /jwt?token=eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiYWxpY2UiLCAiaXNzIjogImJvdW50eXByb29mIiwgImF1ZCI6ICJsb2NhbC1sYWIiLCAiZXhwIjogMTc5MzQ4MTA3OX0.2OumrG1fFCWM5ihQp237CnNoKakLyxVc3ssDJB90rSU HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice",
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "20",
           "Cache-Control": "no-store",
@@ -391,7 +391,7 @@
         "state": "attacker-state"
       },
       "legitimate": {
-        "state": "5lnBqW922nEtNuuwUbgMlCNuixH5y7Nj"
+        "state": "KldqO_JewuRZLnJDo6PelB9V-WYF0FOb"
       },
       "rootCause": "Callback ignores state binding and permits unsolicited account linking.",
       "impact": "Link the wrong fictional provider account.",
@@ -404,7 +404,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "44",
           "Cache-Control": "no-store",
@@ -418,7 +418,7 @@
         "status": 403,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "67",
           "Cache-Control": "no-store",
@@ -428,11 +428,11 @@
         "body": "{\"error\": \"State missing, expired, reused or not bound to session\"}"
       },
       "positive": {
-        "request": "GET /oauth/callback?state=5lnBqW922nEtNuuwUbgMlCNuixH5y7Nj HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=fixture-alice",
+        "request": "GET /oauth/callback?state=KldqO_JewuRZLnJDo6PelB9V-WYF0FOb HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=fixture-alice",
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "44",
           "Cache-Control": "no-store",
@@ -443,11 +443,11 @@
       },
       "additional": [
         {
-          "request": "GET /oauth/callback?state=5lnBqW922nEtNuuwUbgMlCNuixH5y7Nj HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=fixture-alice",
+          "request": "GET /oauth/callback?state=KldqO_JewuRZLnJDo6PelB9V-WYF0FOb HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=fixture-alice",
           "status": 403,
           "headers": {
             "Server": "BaseHTTP/0.6 Python/3.14.6",
-            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
             "Content-Type": "application/json",
             "Content-Length": "67",
             "Cache-Control": "no-store",
@@ -489,7 +489,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "17",
           "Cache-Control": "no-store",
@@ -504,22 +504,22 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "17",
           "Cache-Control": "no-store",
           "X-Content-Type-Options": "nosniff",
           "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'",
-          "Set-Cookie": "sid=eKEVeXq-ioeTODS899BRbA0VZNDgQHKkhkZkgyhG7lM; HttpOnly; SameSite=Strict; Path=/"
+          "Set-Cookie": "sid=IP3H0erlLoVTMnljxDafCTMG2SWUcyUJ-H2mbEHnL0Q; HttpOnly; SameSite=Strict; Path=/"
         },
         "body": "{\"user\": \"alice\"}"
       },
       "positive": {
-        "request": "GET /auth/me HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=eKEVeXq-ioeTODS899BRbA0VZNDgQHKkhkZkgyhG7lM",
+        "request": "GET /auth/me HTTP/1.1\r\nHost: 127.0.0.1:8092\r\nAuthorization: Bearer fixture-alice\r\nCookie: sid=IP3H0erlLoVTMnljxDafCTMG2SWUcyUJ-H2mbEHnL0Q",
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "17",
           "Cache-Control": "no-store",
@@ -534,7 +534,7 @@
           "status": 200,
           "headers": {
             "Server": "BaseHTTP/0.6 Python/3.14.6",
-            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
             "Content-Type": "application/json",
             "Content-Length": "17",
             "Cache-Control": "no-store",
@@ -548,7 +548,7 @@
           "status": 401,
           "headers": {
             "Server": "BaseHTTP/0.6 Python/3.14.6",
-            "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+            "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
             "Content-Type": "application/json",
             "Content-Length": "23",
             "Cache-Control": "no-store",
@@ -592,7 +592,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "41",
           "Cache-Control": "no-store",
@@ -606,7 +606,7 @@
         "status": 403,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "37",
           "Cache-Control": "no-store",
@@ -620,7 +620,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "40",
           "Cache-Control": "no-store",
@@ -664,7 +664,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "27",
           "Cache-Control": "no-store",
@@ -678,7 +678,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "36",
           "Cache-Control": "no-store",
@@ -692,7 +692,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "19",
           "Cache-Control": "no-store",
@@ -736,7 +736,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "34",
           "Cache-Control": "no-store",
@@ -750,7 +750,7 @@
         "status": 403,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "61",
           "Cache-Control": "no-store",
@@ -764,7 +764,7 @@
         "status": 200,
         "headers": {
           "Server": "BaseHTTP/0.6 Python/3.14.6",
-          "Date": "Sat, 31 Oct 2026 20:58:39 GMT",
+          "Date": "Sat, 31 Oct 2026 21:01:19 GMT",
           "Content-Type": "application/json",
           "Content-Length": "35",
           "Cache-Control": "no-store",
