@@ -98,3 +98,7 @@ CI runs those gates and Docker verification, then saves evidence as an artifact.
 [PortSwigger Web Security Academy](https://portswigger.net/web-security/all-labs) supplies public learning references only. No proprietary training content or copied lab solutions are included. No Academy completion is claimed and no account integration or credentials are needed.
 
 ReviewShield (inspected at commit `60d71b9a5a19ed50de8a01a7b7ccbebe250c9fe3`) normalizes static scanner evidence and publishes review checks. PrivilegePath analyzes authorization graphs. BountyProof instead executes original application flaws and validates remediation through HTTP and browser behavior. Its findings are not fabricated bounty submissions or third-party disclosures.
+
+---
+
+**AI assistance:** AI tools helped with code or documentation.
